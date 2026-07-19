@@ -1,9 +1,7 @@
-"""XG Agent SDK — programmatic agents on the Grok Build harness.
+"""xg-agent-sdk: Python agents on the Grok Build harness.
 
-Not an official xAI product. Wraps the open-source Grok Build CLI
-(https://github.com/xai-org/grok-build) with a Claude Agent SDK–shaped API.
-Inference can use Grok, Claude, OpenAI, Gemini (OpenAI-compat), Ollama, or
-any endpoint Grok Build custom models support.
+Unofficial wrapper around the open-source Grok Build CLI
+(https://github.com/xai-org/grok-build).
 """
 
 from ._version import __version__

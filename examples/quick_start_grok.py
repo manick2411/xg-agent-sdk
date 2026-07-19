@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Minimal Grok Build agent run (default model)."""
+"""Minimal agent run using the default Grok Build model."""
 
 from __future__ import annotations
 

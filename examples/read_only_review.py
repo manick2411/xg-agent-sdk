@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only code review agent (no shell, no edits)."""
+"""Read-only code review (file tools only; no shell or edits)."""
 
 from __future__ import annotations
 

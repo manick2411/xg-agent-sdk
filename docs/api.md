@@ -1,36 +1,74 @@
-# API overview
+# API reference
 
-## `query(prompt, options=None)`
+## `query(*, prompt, options=None)`
 
-Async generator of `Message` values for a single agent run.
+Run a single agent turn. Yields a stream of `Message` objects.
+
+```python
+async for message in query(prompt="...", options=XGAgentOptions(...)):
+    ...
+```
 
 ## `XGSDKClient(options=None)`
 
-Multi-turn client. Methods:
+Stateful multi-turn client. Each turn spawns Grok Build with `--resume` after the first result.
 
-- `await client.query(prompt)` then `async for m in client.receive_response()`
-- `async for m in client.ask(prompt)` — combined
-- `client.session_id` — last known session UUID
+| Method / property        | Description                                      |
+|--------------------------|--------------------------------------------------|
+| `await query(prompt)`    | Queue a user message                             |
+| `receive_response()`     | Async iterator of messages for the queued prompt |
+| `ask(prompt)`            | `query` + `receive_response` in one call         |
+| `session_id`             | Last known session UUID                          |
+| `await close()`          | Release client state                             |
 
-## `collect_result` / `collect_text`
+Supports `async with XGSDKClient(...) as client:`.
 
-Convenience wrappers that consume the stream and return the final result.
+## Helpers
 
-## `register_model` / `list_registered_models`
+| Function                         | Description                                      |
+|----------------------------------|--------------------------------------------------|
+| `await collect_result(prompt, options=None)` | Return the final `ResultMessage`      |
+| `await collect_text(prompt, options=None)`   | Return final assistant text as `str`  |
 
-Config helpers for multi-provider models.
+## Models
+
+| Function | Description |
+|----------|-------------|
+| `register_model(name, *, model, base_url, ...)` | Merge a `[model.<name>]` section into Grok config |
+| `list_registered_models(config_path=None)` | List custom model names from config |
+
+Provider presets (kwargs for `register_model`): `anthropic_claude`, `openai_gpt`, `gemini_openai_compat`, `ollama_local`, `openrouter`, `xai_grok`.
 
 ## Messages
 
-- `TextMessage` — assistant text chunk
-- `ThoughtMessage` — reasoning chunk
-- `ResultMessage` — final turn (text, session_id, usage, cost)
-- `ErrorMessage` — agent/stream error event
-- `SystemMessage` — unknown/lifecycle events (`subtype`, `data`)
+| Type | Fields |
+|------|--------|
+| `TextMessage` | `text` |
+| `ThoughtMessage` | `text` |
+| `ResultMessage` | `result`, `stop_reason`, `session_id`, `request_id`, `usage`, `num_turns`, `total_cost_usd`, `model_usage` |
+| `ErrorMessage` | `message` |
+| `SystemMessage` | `subtype`, `data` (forward-compatible events) |
 
 ## Errors
 
-- `CLINotFoundError`
-- `CLIConnectionError`
-- `ProcessError` (`exit_code`, `stderr`)
-- `CLIJSONDecodeError` (`line`)
+| Exception | When |
+|-----------|------|
+| `XGSDKError` | Base class |
+| `CLINotFoundError` | `grok` binary not found |
+| `CLIConnectionError` | Process spawn/IO failure |
+| `ProcessError` | Non-zero exit (`exit_code`, `stderr`) |
+| `CLIJSONDecodeError` | Invalid streaming-json line |
+
+## `XGAgentOptions`
+
+See the [README configuration table](../README.md#configuration-reference) for the full CLI mapping. Notable fields:
+
+| Field | Purpose |
+|-------|---------|
+| `system_prompt` / `system_prompt_file` | Replace the default system prompt |
+| `rules` / `append_system_prompt` / `rules_file` | Append instructions to the default prompt |
+| `model`, `cwd`, `max_turns` | Model, workspace, turn limit |
+| `allowed_tools`, `disallowed_tools` | Tool filtering |
+| `permission_mode`, `always_approve`, `allow`, `deny` | Permissions |
+| `resume`, `continue_session`, `session_id` | Sessions |
+| `cli_path`, `env`, `extra_args` | Process control |

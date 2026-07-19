@@ -1,39 +1,53 @@
-# Multi-provider guide
+# Multi-provider models
 
-Grok Build speaks three inference protocols. This SDK registers models into
-`~/.grok/config.toml` and selects them with `XGAgentOptions(model=...)`.
+Grok Build supports three inference backends. This SDK registers models in Grok’s config (`~/.grok/config.toml` by default) and selects them with `XGAgentOptions(model=...)`.
 
 ## Backends
 
-| `api_backend` | Protocol | Use for |
-|---------------|----------|---------|
-| `chat_completions` | OpenAI Chat Completions | OpenAI, Gemini OpenAI-compat, Ollama, OpenRouter, vLLM, LiteLLM |
-| `responses` | OpenAI Responses API | OpenAI Responses-capable endpoints, some xAI paths |
-| `messages` | Anthropic Messages | Claude direct |
+| `api_backend` | Protocol | Typical use |
+|---------------|----------|-------------|
+| `chat_completions` | OpenAI Chat Completions | OpenAI, Gemini (OpenAI-compat), Ollama, OpenRouter, vLLM, LiteLLM |
+| `responses` | OpenAI Responses API | OpenAI Responses endpoints, some xAI paths |
+| `messages` | Anthropic Messages API | Claude |
 
-## Registering models
+## Registration
 
 ```python
-from xg_agent_sdk import register_model, anthropic_claude
+from xg_agent_sdk import register_model, anthropic_claude, openai_gpt, ollama_local
 
+register_model(**anthropic_claude(name="claude", model="claude-sonnet-4"))
+register_model(**openai_gpt(name="openai", model="gpt-4o"))
+register_model(**ollama_local(name="ollama", model="qwen2.5-coder"))
+```
+
+```python
 register_model(
-    **anthropic_claude(name="claude", model="claude-sonnet-4"),
-    config_path=None,  # default ~/.grok/config.toml
+    name="custom",
+    model="my-model-id",
+    base_url="https://api.example.com/v1",
+    api_backend="chat_completions",
+    env_key="MY_API_KEY",
+    context_window=128_000,
+    config_path=None,  # default: ~/.grok/config.toml
     backup=True,
 )
 ```
 
-For tests or isolated configs, pass `config_path=Path("/tmp/demo-config.toml")`.
+Use `config_path` for isolated configs (tests, CI). Prefer `env_key` over embedding secrets in `api_key`.
 
-## Quality notes
+## Presets
 
-- Prefer models with strong tool-calling for multi-step coding agents.
-- Ollama / small models: keep `max_turns` low and tool sets small.
-- Compaction and some server-side tools (e.g. backend web search) may only
-  apply fully on xAI-hosted models.
+| Helper | Default backend | Default env |
+|--------|-----------------|-------------|
+| `xai_grok` | `responses` | `XAI_API_KEY` |
+| `anthropic_claude` | `messages` | `ANTHROPIC_API_KEY` |
+| `openai_gpt` | `chat_completions` | `OPENAI_API_KEY` |
+| `gemini_openai_compat` | `chat_completions` | `GOOGLE_API_KEY` |
+| `ollama_local` | `chat_completions` | — |
+| `openrouter` | `chat_completions` | `OPENROUTER_API_KEY` |
 
-## Security
+## Notes
 
-- Prefer `env_key` over embedding `api_key` in config.toml.
-- `register_model` creates a timestamped `.bak` next to the config file.
-- Never commit config files that contain secrets.
+- Tool-calling quality depends on the model; prefer stronger models for multi-step agent work.
+- `register_model` creates a timestamped `.bak` backup when updating an existing config file.
+- Do not commit config files that contain API keys.

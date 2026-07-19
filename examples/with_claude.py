@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-"""Use Grok Build harness with Anthropic Claude as the model.
-
-Requires:
-  - grok CLI installed
-  - ANTHROPIC_API_KEY set
-  - Network access to api.anthropic.com
-"""
+"""Grok Build harness with Anthropic Claude. Requires ANTHROPIC_API_KEY."""
 
 from __future__ import annotations
 
@@ -24,7 +18,6 @@ async def main() -> None:
     if not os.environ.get("ANTHROPIC_API_KEY"):
         raise SystemExit("Set ANTHROPIC_API_KEY first")
 
-    # Writes [model.claude] into ~/.grok/config.toml (with backup)
     register_model(**anthropic_claude(name="claude", model="claude-sonnet-4"))
 
     text = await collect_text(

@@ -1,12 +1,11 @@
 # Changelog
 
-## 0.1.0 — 2026-07-19
+## [0.1.0](https://github.com/manick2411/xg-agent-sdk/releases/tag/v0.1.0) — 2026-07-19
 
 ### Added
 
-- `query()` one-shot async streaming API over Grok Build headless mode
-- `XGSDKClient` multi-turn client with session resume
-- `XGAgentOptions` (system prompt override/append, tools, permissions, model, …)
-- Multi-provider helpers: `register_model`, presets for Claude / OpenAI / Gemini / Ollama / OpenRouter / xAI
-- `collect_text` / `collect_result` convenience helpers
-- Examples and unit tests
+- `query()` streaming API over Grok Build headless mode
+- `XGSDKClient` for multi-turn sessions
+- `XGAgentOptions` (prompts, tools, permissions, models, sandbox)
+- `register_model` and provider presets
+- `collect_text` / `collect_result` helpers

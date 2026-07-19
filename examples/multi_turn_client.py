@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Multi-turn conversation with session resume."""
+"""Multi-turn conversation using XGSDKClient session resume."""
 
 from __future__ import annotations
 

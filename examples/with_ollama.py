@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Grok Build harness + local Ollama model."""
+"""Grok Build harness with a local Ollama model."""
 
 from __future__ import annotations
 

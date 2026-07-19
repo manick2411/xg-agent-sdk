@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Grok Build harness + OpenAI model."""
+"""Grok Build harness with OpenAI. Requires OPENAI_API_KEY."""
 
 from __future__ import annotations
 

@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-"""Custom system prompts / rules with the XG Agent SDK.
-
-Two modes:
-
-1. **append** (recommended) — keep Grok Build's default harness prompt, add yours
-2. **override** — replace the entire system prompt with your text
-"""
+"""Demonstrates append rules, full system-prompt override, and rules from file."""
 
 from __future__ import annotations
 
