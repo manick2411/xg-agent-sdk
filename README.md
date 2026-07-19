@@ -23,11 +23,16 @@ There is no published official “XG Agent SDK” package today. Grok Build’s 
 # Prerequisites: Grok Build CLI
 curl -fsSL https://x.ai/cli/install.sh | bash
 
-# This SDK
-pip install -e "/home/manick/xg-agent-sdk[dev]"
-# or from the repo root:
+# From PyPI (after publish)
+pip install xg-agent-sdk
+
+# From source
+git clone https://github.com/manick/xg-agent-sdk.git
+cd xg-agent-sdk
 pip install -e ".[dev]"
 ```
+
+> **Note:** PyPI name is `xg-agent-sdk` (import `xg_agent_sdk`). The name `grok-agent-sdk` was already reserved on PyPI by a third-party placeholder.
 
 Auth (any one):
 
