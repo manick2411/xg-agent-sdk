@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "xg-agent-sdk"
-version = "0.1.0"
+version = "0.1.1"
 description = "Claude Agent SDK–shaped Python API for the Grok Build harness — any model"
 readme = "README.md"
 license = "Apache-2.0"
@@ -36,12 +36,19 @@ classifiers = [
 dependencies = []
 
 [project.optional-dependencies]
+# Meta-extra: install the SDK and then run `xg-agent-install-grok` to fetch
+# a compatible Grok Build CLI binary (see README). Kept as a named extra so
+# `pip install "xg-agent-sdk[grok]"` is the documented path.
+grok = []
 dev = [
   "pytest>=8.0",
   "pytest-asyncio>=0.24",
   "build>=1.2",
   "twine>=5.0",
 ]
+
+[project.scripts]
+xg-agent-install-grok = "xg_agent_sdk.install_cli:main"
 
 [project.urls]
 Homepage = "https://github.com/manick2411/xg-agent-sdk"

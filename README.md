@@ -8,15 +8,43 @@ Provides a Claude Agent SDK–style API (`query`, options, streaming messages, m
 
 ## Requirements
 
-- Python 3.10+
-- [Grok Build CLI](https://x.ai/cli)
-- API credentials for your chosen model provider
+| Requirement | Notes |
+|-------------|--------|
+| Python 3.10+ | |
+| **Grok Build CLI** | Required — the SDK drives the CLI as the agent harness |
+| API credentials | e.g. `XAI_API_KEY`, or `grok login` |
+
+### Recommended install (SDK + compatible CLI)
+
+```bash
+pip install "xg-agent-sdk[grok]"
+xg-agent-install-grok          # downloads a CLI version known to work with this SDK
+export XAI_API_KEY=xai-...     # or: grok login
+```
+
+This installs the Python package, then fetches the Grok Build binary into
+`~/.local/share/xg-agent-sdk/bin/grok` (and links `~/.grok/bin/grok`). The pin
+is defined in the SDK so it stays compatible with the streaming-json protocol
+we use.
+
+Equivalent:
+
+```bash
+pip install xg-agent-sdk
+python -m xg_agent_sdk install-cli
+```
+
+### Alternative: use an existing Grok Build install
+
+If you already have the [official CLI](https://x.ai/cli):
 
 ```bash
 curl -fsSL https://x.ai/cli/install.sh | bash
 pip install xg-agent-sdk
-export XAI_API_KEY=xai-...   # or: grok login
 ```
+
+The SDK looks for `grok` on `PATH`, `GROK_CLI_PATH`, `~/.local/share/xg-agent-sdk/bin`,
+and `~/.grok/bin`.
 
 ## Quick start
 

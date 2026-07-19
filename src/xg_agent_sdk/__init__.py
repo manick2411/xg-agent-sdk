@@ -14,6 +14,7 @@ from .errors import (
     ProcessError,
 )
 from .helpers import collect_result, collect_text
+from .install_cli import ensure_cli, install_grok_cli
 from .models import list_registered_models, register_model
 from .providers import (
     anthropic_claude,
@@ -60,4 +61,6 @@ __all__ = [
     "xai_grok",
     "collect_result",
     "collect_text",
+    "install_grok_cli",
+    "ensure_cli",
 ]

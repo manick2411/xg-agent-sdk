@@ -20,7 +20,7 @@ async def run_streaming_query(
 ) -> AsyncIterator[Message]:
     """Spawn Grok Build and yield parsed streaming messages."""
     options = options or XGAgentOptions()
-    cli = resolve_cli_path(options.cli_path)
+    cli = resolve_cli_path(options.cli_path, auto_install=options.auto_install_cli)
     argv, temp_prompt = build_argv(prompt, options, cli_path=cli)
 
     env = os.environ.copy()

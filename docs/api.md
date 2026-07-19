@@ -49,6 +49,22 @@ Provider presets (kwargs for `register_model`): `anthropic_claude`, `openai_gpt`
 | `ErrorMessage` | `message` |
 | `SystemMessage` | `subtype`, `data` (forward-compatible events) |
 
+## Grok Build CLI install
+
+| Command | Description |
+|---------|-------------|
+| `pip install "xg-agent-sdk[grok]"` | Install the SDK (then run the installer) |
+| `xg-agent-install-grok` | Download a compatible Grok Build binary |
+| `python -m xg_agent_sdk install-cli` | Same as above |
+| `install_grok_cli()` / `ensure_cli()` | Programmatic install |
+
+| Option / env | Description |
+|--------------|-------------|
+| `XGAgentOptions(auto_install_cli=True)` | Download CLI on first use if missing |
+| `XG_AGENT_AUTO_INSTALL_CLI=1` | Same, via environment |
+
+Binary location: `~/.local/share/xg-agent-sdk/bin/grok` (also linked to `~/.grok/bin`).
+
 ## Errors
 
 | Exception | When |

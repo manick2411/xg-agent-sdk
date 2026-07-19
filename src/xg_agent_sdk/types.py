@@ -96,6 +96,8 @@ class XGAgentOptions:
     no_auto_update: bool = True
     # When True, raise ProcessError on non-zero exit after streaming
     raise_on_error: bool = True
+    # Download a compatible Grok Build CLI if none is found
+    auto_install_cli: bool = False
 
     def resolved_system_prompt(self) -> str | None:
         """Return override text from ``system_prompt`` or ``system_prompt_file``."""
