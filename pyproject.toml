@@ -44,10 +44,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/manick/xg-agent-sdk"
-Repository = "https://github.com/manick/xg-agent-sdk"
-Issues = "https://github.com/manick/xg-agent-sdk/issues"
-Documentation = "https://github.com/manick/xg-agent-sdk#readme"
+Homepage = "https://github.com/manick2411/xg-agent-sdk"
+Repository = "https://github.com/manick2411/xg-agent-sdk"
+Issues = "https://github.com/manick2411/xg-agent-sdk/issues"
+Documentation = "https://github.com/manick2411/xg-agent-sdk#readme"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/xg_agent_sdk"]

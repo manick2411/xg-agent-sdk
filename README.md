@@ -27,7 +27,7 @@ curl -fsSL https://x.ai/cli/install.sh | bash
 pip install xg-agent-sdk
 
 # From source
-git clone https://github.com/manick/xg-agent-sdk.git
+git clone https://github.com/manick2411/xg-agent-sdk.git
 cd xg-agent-sdk
 pip install -e ".[dev]"
 ```
